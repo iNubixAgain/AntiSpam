@@ -1,1 +1,31 @@
-/.venv
+﻿# Entorno y credenciales locales
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+.pgpass
+pgpass.conf
+
+# PostgreSQL, Gradio y respaldos locales
+/datos/
+.gradio/
+*.dump
+*.backup
+/Documentacion/*.sql
+*.sql.gz
+*.sql.bz2
+*.sqlite*
+*.db
+
+# Archivos generados por Python y el sistema
+__pycache__/
+*.py[cod]
+*.log
+*.tmp
+*.part
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
