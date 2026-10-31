@@ -43,7 +43,7 @@ Para otra instalación, copie `./.env.example` a `./.env` si todavía no existe 
 Copy-Item .\.env.example .\.env
 ```
 
-No sobrescriba una configuración existente. Cada integrante debe crear su propio entorno `./.venv/`; no se comparte esa carpeta. Un clon de Git no incluye `./.env`, `./datos/` ni los dumps. El equipo debe transferir el respaldo por un canal privado y restaurarlo en la instalación de cada integrante mediante una cuenta administrativa. Esta versión de la aplicación no crea ni importa bases y conserva su acceso de solo lectura.
+No sobrescriba una configuración existente. Cada integrante debe crear su propio entorno `./.venv/`; no se comparte esa carpeta. Un clon incluye el dump completo y su TXT de ejemplos dentro de `./Documentacion/`, pero no incluye `./.env` ni `./datos/`. El equipo debe restaurar el dump en la instalación de cada integrante mediante una cuenta administrativa, siguiendo la guía de herramientas. La aplicación conserva su acceso de solo lectura.
 
 ## Datos conservados
 
@@ -52,7 +52,7 @@ No sobrescriba una configuración existente. Cada integrante debe crear su propi
 | UCI SMS Spam Collection | 5,574 | 4,827 | 747 |
 | Apache SpamAssassin | 6,024 | 4,150 | 1,874 |
 
-Total conservado: 11,598 registros reales. SpamAssassin rechazó 22 registros durante la importación original. Enron no fue importado y no se inventaron registros para completarlo. Las descargas comprimidas ya importadas se retiraron durante la limpieza; los datos PostgreSQL y el respaldo inicial se conservan.
+Total conservado: 11,598 registros reales. SpamAssassin rechazó 22 registros durante la importación original. Enron no fue importado y no se inventaron registros para completarlo. Se conserva un único dump completo y su TXT de ejemplos; se retiraron el respaldo inicial y su TXT duplicado.
 
 ## Comprobar el funcionamiento
 
@@ -62,7 +62,7 @@ El proyecto no requiere herramientas de desarrollo adicionales para ejecutarse.
 
 ## Respaldo
 
-`Documentacion/antispam-completo.dump` es el respaldo completo de la base actual, generado con pg_dump (esquema, datos y secuencias, sin filtros de tablas). `Documentacion/respaldo-inicial.dump` conserva el respaldo anterior. Los dumps contienen datos reales y están excluidos de Git. Las credenciales y los roles globales del servidor no se incluyen en estos respaldos de base de datos.
+`Documentacion/antispam-completo.dump` es el respaldo completo, generado con pg_dump (esquema, datos y secuencias, sin filtros de tablas). Se incluye en Git junto con `Documentacion/ejemplos-antispam-completo.txt`, que contiene los 11,598 textos completos con su fuente, canal y etiqueta. Para probar, copie solo el bloque TEXTO y conserve la puntuación. Ambos contienen datos reales sujetos a las condiciones de uso de sus fuentes. Las credenciales y los roles globales del servidor no se incluyen. Los respaldos adicionales siguen excluidos de Git.
 
 Para crear otro respaldo sin sobrescribir los existentes:
 

@@ -13,10 +13,19 @@ pgpass.conf
 *.dump
 *.backup
 /Documentacion/*.sql
+/Documentacion/ejemplos-*.txt
 *.sql.gz
 *.sql.bz2
 *.sqlite*
 *.db
+
+# Copias de datos incluidas expresamente para el equipo
+!/Documentacion/antispam-completo.dump
+!/Documentacion/ejemplos-antispam-completo.txt
+
+# Preparación del VPS: conservar únicamente en esta PC
+/tools/GUIA_VPS.md
+/tools/nginx-antispam.conf
 
 # Archivos generados por Python y el sistema
 __pycache__/

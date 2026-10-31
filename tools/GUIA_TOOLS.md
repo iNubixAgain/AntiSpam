@@ -1,4 +1,4 @@
-﻿# Herramientas de AntiSpam
+# Herramientas de AntiSpam
 
 Estas utilidades funcionan aparte de Gradio y usan las mismas dependencias de `requirements.txt`. No requieren herramientas de desarrollo adicionales.
 
@@ -39,7 +39,7 @@ Agregue la carpeta `bin` de su instalación de PostgreSQL al PATH; no hay una ub
 .\.venv\Scripts\python.exe .\tools\exportar_dump.py .\Documentacion\respaldo-equipo.dump
 ```
 
-Usa DATABASE_URL y pg_dump oficial. Exporta esquema, datos y secuencias en formato custom, sin contraseñas ni roles globales. No sobrescribe archivos y el directorio destino debe existir. Las credenciales de conexión no se pasan como argumentos de línea de comandos. Los dumps siguen excluidos de Git y deben compartirse por un canal privado.
+Usa DATABASE_URL y pg_dump oficial. Exporta esquema, datos y secuencias en formato custom, sin contraseñas ni roles globales. No sobrescribe archivos y el directorio destino debe existir. Las credenciales de conexión no se pasan como argumentos de línea de comandos. El repositorio incluye expresamente `Documentacion/antispam-completo.dump` y `Documentacion/ejemplos-antispam-completo.txt`; los respaldos adicionales permanecen excluidos de Git.
 
 ## Importar un respaldo en otro equipo
 
