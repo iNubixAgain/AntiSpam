@@ -11,8 +11,6 @@ flowchart TD
     U[Usuario local] --> G[Gradio: app.py]
     G --> A[analisis.py: validar mensaje y canal]
     A --> D[base_datos.py: consultas parametrizadas]
-    G --> E[Explorador limitado y paginado]
-    E --> D
     D --> P[(PostgreSQL: fuentes y mensajes existentes)]
     P --> R[Etiqueta original o sin clasificación]
     R --> G
@@ -39,7 +37,7 @@ La URL de la aplicación usa `antispam_lectura`, sin privilegios de superusuario
 
 El rol tiene default_transaction_read_only activado y psycopg establece read_only en cada conexión. Esas protecciones de sesión no reemplazan los privilegios: aunque se desactiven, el rol sigue sin poder escribir. La credencial administrativa se conserva exclusivamente para mantenimiento en `.env.postgres-local`; no se carga desde la aplicación. Los administradores de PostgreSQL pueden gestionar la base, por lo que no se afirma que los datos sean inmutables frente a un administrador.
 
-No existen funciones de creación de esquema, registro de fuentes o inserción en base_datos.py. El análisis, la exploración y Limpiar solo leen o modifican componentes de interfaz. No hay incorporación automática de mensajes ni entrenamiento.
+No existen funciones de creación de esquema, registro de fuentes o inserción en base_datos.py. El análisis y Limpiar solo leen o modifican componentes de interfaz. No hay incorporación automática de mensajes ni entrenamiento. La base se consulta internamente y no se ofrece una vista de sus registros en la página.
 
 ## Modelo relacional conservado
 
@@ -60,7 +58,7 @@ Una coincidencia textual no garantiza seguridad: puede reutilizarse el mismo tex
 
 ## Gradio
 
-Blocks organiza las pestañas de consulta y exploración. Textbox captura texto y muestra cinco salidas de solo lectura. Radio filtra realmente por canal. Los botones Analizar mensaje y Limpiar conectan funciones mediante click. Dropdown, Number y Dataframe implementan filtros y páginas de diez ejemplos. La exploración requiere pulsar Buscar; no muestra ejemplos automáticamente.
+Blocks organiza una única pantalla. Textbox captura el mensaje y muestra cinco salidas de solo lectura. Radio filtra realmente por canal. Los botones Analizar mensaje y Limpiar conectan funciones mediante click. No hay pestañas, tablas, filtros ni ejemplos de los datasets en la interfaz.
 
 Gradio escucha únicamente en 127.0.0.1 con share=False y analytics_enabled=False. El sistema no guarda los mensajes del usuario. Esto no es una garantía de ausencia de memoria temporal del navegador o registros de infraestructura; evite información sensible.
 
@@ -70,13 +68,13 @@ Gradio escucha únicamente en 127.0.0.1 con share=False y analytics_enabled=Fals
 - [Apache SpamAssassin Public Corpus](https://spamassassin.apache.org/old/publiccorpus/) y [condiciones](https://spamassassin.apache.org/old/publiccorpus/readme.html): se conservan 6,024 correos de cinco categorías. Easy_ham, easy_ham_2 y hard_ham corresponden a ham; spam y spam_2 a spam. Los remitentes conservan el copyright y el corpus no debe reenviarse a sistemas de correo activos. Hubo 22 rechazos durante el procesamiento original.
 - [CMU Enron Email Dataset](https://www.cs.cmu.edu/~enron/): fuente prevista pero no importada. No se considera ham por defecto y sus originales carecen de etiquetas binarias de spam. CMU pide sensibilidad respecto a la privacidad; la disponibilidad pública no implica permiso universal de redistribución.
 
-Los ejemplos de UCI y SpamAssassin están limitados a 240 caracteres y ocultan correos, números largos y URLs. Pueden quedar nombres u otros datos: es una ocultación parcial, no anonimización completa. Enron, si ya existiera en una base configurada, mostraría solo metadatos y nunca su contenido o asunto. La interfaz no permite buscar dentro de su cuerpo.
+La interfaz no expone ejemplos, cuerpos ni asuntos de los registros almacenados. Solo recibe el mensaje que el usuario desea probar y muestra su resultado. La comprobación administrativa de conexión y estadísticas se realiza fuera de la página, mediante las utilidades de tools/.
 
 Los corpus históricos, mayoritariamente ingleses, no representan necesariamente mensajes actuales en español. Ham/spam no equivalen a una clasificación de fraude. No se redistribuyan datos, capturas o respaldos sin revisar derechos y privacidad.
 
 ## Verificación y mantenimiento
 
-La comprobación de funcionamiento se realiza desde la interfaz: conexión de solo lectura, totales por fuente, consulta de etiquetas existentes, mensajes ausentes y botón Limpiar. La versión simplificada no incluye herramientas de revisión de código, automatizaciones de GitHub ni una suite de pruebas; para ejecutar basta con las dependencias de requirements.txt.
+Desde la interfaz se comprueban las etiquetas existentes, mensajes ausentes y botones. La conexión de solo lectura y los totales por fuente se verifican con `tools/probar_app.py`, fuera de la página. La versión simplificada no incluye herramientas de revisión de código, automatizaciones de GitHub ni una suite de pruebas; para ejecutar basta con las dependencias de requirements.txt.
 
 Las utilidades administrativas y el comprobador sencillo están en `./tools/`, con sus instrucciones en [tools/GUIA_TOOLS.md](../tools/GUIA_TOOLS.md). La app no importa estos scripts. La restauración requiere RESTORE_DATABASE_URL y una base nueva sin objetos; nunca utiliza automáticamente la conexión de lectura DATABASE_URL. No se reintroducen importadores de datasets ni dependencias de desarrollo.
 

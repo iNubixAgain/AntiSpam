@@ -19,7 +19,7 @@ Con PostgreSQL iniciado y DATABASE_URL configurada para una cuenta de solo lectu
 .\.venv\Scripts\python.exe .\tools\probar_app.py
 ```
 
-Comprueba permisos, estadísticas, una etiqueta existente si hay datos, entrada vacía, explorador y botones Analizar y Limpiar. No inserta datos ni imprime contenidos privados. Una base vacía se informa como tal y se omite la comprobación de un registro existente.
+Comprueba permisos, estadísticas, una etiqueta existente si hay datos, entrada vacía y botones Analizar y Limpiar. También verifica que la interfaz no tenga un explorador de datasets. No inserta datos ni imprime contenidos privados. Una base vacía se informa como tal y se omite la comprobación de un registro existente.
 
 Para comprobar también HTTP, abra primero la aplicación en otra terminal y ejecute:
 

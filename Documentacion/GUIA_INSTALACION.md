@@ -17,7 +17,7 @@ Si ya tiene configurada la instancia local en `./datos/postgresql/`, iníciela y
 
 Si PostgreSQL ya funciona como servicio o usa otra instancia, ejecute únicamente el segundo comando con la conexión correspondiente en `./.env`. El iniciador requiere `pg_ctl` disponible en el `PATH` y no crea una instancia nueva.
 
-Abra http://127.0.0.1:7860. Gradio funciona localmente sin enlace público. Seleccione SMS, Correo o Chat antes de consultar. Limpiar restablece únicamente los campos de la interfaz. El explorador permite filtros y búsqueda paginada, con ejemplos limitados y ocultación parcial de datos personales. Enron oculta siempre el contenido.
+Abra http://127.0.0.1:7860. Gradio funciona localmente sin enlace público. Escriba el mensaje, seleccione SMS, Correo o Chat y pulse Analizar mensaje. Limpiar restablece los campos de la interfaz. La página no muestra datasets, tablas ni ejemplos almacenados.
 
 La portada de GitHub es el [README de la raíz](../README.md). Esta guía, la documentación técnica y los dumps se encuentran en `./Documentacion/`. Los enlaces entre documentos son relativos al archivo que está leyendo.
 
@@ -56,7 +56,7 @@ Total conservado: 11,598 registros reales. SpamAssassin rechazó 22 registros du
 
 ## Comprobar el funcionamiento
 
-Abra la aplicación, entre en Explorar datasets y pulse Buscar / actualizar estado. Debe indicar conexión en modo de solo lectura y mostrar los totales anteriores. Un mensaje nuevo debe aparecer sin clasificación; Limpiar debe vaciar los campos.
+Abra la aplicación y pruebe un texto con el canal correspondiente. Un mensaje nuevo debe aparecer sin clasificación; un mensaje con etiqueta guardada muestra su clasificación original. Limpiar debe vaciar los campos. Para comprobar conexión, permisos y totales fuera de la página, utilice `tools/probar_app.py` según su guía.
 
 El proyecto no requiere herramientas de desarrollo adicionales para ejecutarse.
 

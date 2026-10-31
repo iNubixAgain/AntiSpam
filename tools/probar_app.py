@@ -40,10 +40,12 @@ def probar(http=False):
         comprobar(resultado[2] != "PostgreSQL no disponible.", "Falló la consulta de etiquetas.")
     comprobar(analizar_mensaje("", "SMS")[0] == "Sin analizar", "Falló la validación del mensaje vacío.")
 
-    from app import consultar_datasets, demo, limpiar
+    from app import demo, limpiar
 
     comprobar(limpiar() == ("", "SMS", "", "", "", "", ""), "Falló Limpiar.")
-    comprobar("solo lectura" in consultar_datasets("Todas", "Todas", "", 1)[0], "Falló el explorador.")
+
+    comprobar(len(demo.config["dependencies"]) == 2, "La interfaz debe tener solo Analizar y Limpiar.")
+    comprobar(not any(c["type"] in ("tabitem", "dataframe", "dropdown") for c in demo.config["components"]), "La interfaz no debe mostrar datasets.")
 
     async def botones():
         analisis = await demo.process_api(0, ["", "SMS"], state=None)
@@ -54,7 +56,7 @@ def probar(http=False):
     asyncio.run(botones())
     with conectar() as con:
         comprobar(sum(f["total"] for f in estadisticas(con)) == total, "Cambió el total de registros durante la comprobación.")
-    print("Consultas, explorador y botones: correctos; no se escribieron registros.")
+    print("Consultas y botones: correctos; no se escribieron registros.")
     if http:
         with urlopen("http://127.0.0.1:7860/", timeout=5) as respuesta:
             comprobar(respuesta.status == 200, "Gradio no respondió correctamente.")

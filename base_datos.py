@@ -45,22 +45,3 @@ def estadisticas(con):
         count(m.id) FILTER (WHERE m.etiqueta_original='spam') AS spam,
         count(m.id) FILTER (WHERE m.etiqueta_original IS NULL) AS sin_etiqueta
         FROM fuentes f LEFT JOIN mensajes m ON m.fuente_id=f.id GROUP BY f.codigo ORDER BY f.codigo""").fetchall()
-
-
-def explorar(fuente="Todas", etiqueta="Todas", busqueda="", pagina=1):
-    pagina = max(1, int(pagina))
-    with conectar() as con:
-        resumen = estadisticas(con)
-        filas = con.execute(
-            """SELECT m.id,f.codigo,m.canal,m.etiqueta_original,
-            CASE WHEN f.codigo='enron' THEN '[Contenido privado: no se muestra]'
-            ELSE left(m.contenido,240) END AS ejemplo
-            FROM mensajes m JOIN fuentes f ON f.id=m.fuente_id
-            WHERE (%s='Todas' OR f.codigo=%s)
-            AND (%s='Todas' OR (%s='Sin etiqueta' AND m.etiqueta_original IS NULL)
-                 OR m.etiqueta_original=%s)
-            AND (%s='' OR (f.codigo<>'enron' AND position(lower(%s) IN lower(m.contenido))>0))
-            ORDER BY m.id LIMIT 10 OFFSET %s""",
-            (fuente, fuente, etiqueta, etiqueta, etiqueta, busqueda, busqueda, (pagina - 1) * 10),
-        ).fetchall()
-    return resumen, filas
