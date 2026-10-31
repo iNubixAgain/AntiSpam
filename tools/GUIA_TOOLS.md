@@ -94,4 +94,4 @@ Los nombres y el puerto son ejemplos: adáptelos de forma coherente a su instala
 
 Cada script admite `--help`. Puede elegir los ejecutables oficiales mediante `--pg-dump` o `--pg-restore`. Si faltan, revise PATH. Si el destino de restauración ya contiene objetos, cree otra base; no borre la base del proyecto. Los errores devuelven código 1 sin mostrar mensajes privados ni contraseñas.
 
-Consulte [el README principal](../README.md) para instalar y abrir la aplicación.
+Consulte [la guía de instalación](../Documentacion/GUIA_INSTALACION.md) para instalar y abrir la aplicación, o vuelva a la [portada del proyecto](../README.md).
